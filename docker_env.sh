@@ -11,8 +11,8 @@ function clean()
 
 	if [ ! -z "$container_list" ]
 	then
-		docker kill $(docker ps -q --filter "name=$prefix")
-		docker rm $(docker ps -aq --filter "name=$prefix")
+		sudo docker kill $(docker ps -q --filter "name=$prefix")
+		sudo docker rm $(docker ps -aq --filter "name=$prefix")
 	fi
 	
 	echo ""
@@ -34,17 +34,17 @@ function build()
 	echo "Chrome Node Name:"$chrome_node
 	echo "Firefox Node Name:"$firefox_node
 
-	docker pull selenium/hub
+	sudo docker pull selenium/hub
 
-	docker build -t selenium/vnc-node-chrome-debug ./node_chrome
+	sudo docker build -t selenium/vnc-node-chrome-debug ./node_chrome
 
-	docker run -p 5555:4444 -d --name "$selenium_hub"  selenium/hub
+	sudo docker run -p 5555:4444 -d --name "$selenium_hub"  selenium/hub
 
-	docker run -P -d --name "$chrome_node" --link $selenium_hub:hub  selenium/vnc-node-chrome-debug
+	sudo docker run -P -d --name "$chrome_node" --link $selenium_hub:hub  selenium/vnc-node-chrome-debug
 
-	docker build -t selenium/vnc-node-firefox-debug ./node_firefox
+	sudo docker build -t selenium/vnc-node-firefox-debug ./node_firefox
 
-	docker run -P -d --name "$firefox_node" --link $selenium_hub:hub  selenium/vnc-node-firefox-debug
+	sudo docker run -P -d --name "$firefox_node" --link $selenium_hub:hub  selenium/vnc-node-firefox-debug
 
 	echo ""
 	echo "*** Building is Done ***"
