@@ -22,6 +22,11 @@ function clean()
 
 function build()
 {	
+	docker_path=`pwd`
+	cd ~
+	home_pwd=`pwd`
+	cd $docker_path
+
 	echo ""
 	echo "*** Now is building ***"
 	echo ""
@@ -40,15 +45,19 @@ function build()
 
 	sudo docker run -p 5555:4444 -d --name "$selenium_hub"  selenium/hub
 
-	sudo docker run -P -d --name "$chrome_node" --link $selenium_hub:hub  selenium/vnc-node-chrome-debug
+	mkdir $home_pwd/tmp/Downloads
+
+	sudo docker run -P -v $home_pwd/tmp/Downloads:/home/seluser/Downloads -d --name "$chrome_node" --link $selenium_hub:hub  selenium/vnc-node-chrome-debug
 
 	sudo docker build -t selenium/vnc-node-firefox-debug ./node_firefox
-
-	sudo docker run -P -d --name "$firefox_node" --link $selenium_hub:hub  selenium/vnc-node-firefox-debug
+	
+	sudo docker run -P -v $home_pwd/tmp/Downloads:/home/seluser/Downloads -d --name "$firefox_node" --link $selenium_hub:hub  selenium/vnc-node-firefox-debug
 
 	echo ""
 	echo "*** Building is Done ***"
 	echo ""
+
+	sudo docker ps
 }
 
 
