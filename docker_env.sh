@@ -29,6 +29,8 @@ function build()
 
 	mkdir $home_pwd/tmp/Downloads
 
+	chmod 777 -R $home_pwd/tmp/Downloads
+
 	echo ""
 	echo "*** Now is building ***"
 	echo ""
