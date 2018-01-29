@@ -27,6 +27,8 @@ function build()
 	home_pwd=`pwd`
 	cd $docker_path
 
+	mkdir $home_pwd/tmp/Downloads
+
 	echo ""
 	echo "*** Now is building ***"
 	echo ""
@@ -44,9 +46,7 @@ function build()
 	sudo docker build -t selenium/vnc-node-chrome-debug ./node_chrome
 
 	sudo docker run -p 5555:4444 -d --name "$selenium_hub"  selenium/hub
-
-	mkdir $home_pwd/tmp/Downloads
-
+	
 	sudo docker run -P -v $home_pwd/tmp/Downloads:/home/seluser/Downloads -d --name "$chrome_node" --link $selenium_hub:hub  selenium/vnc-node-chrome-debug
 
 	sudo docker build -t selenium/vnc-node-firefox-debug ./node_firefox
