@@ -45,15 +45,15 @@ function build()
 
 	sudo docker pull selenium/hub
 
-	sudo docker run -p 5555:4444 -e "TZ=Asia/Taipei" -e GRID_MAX_SESSION=2 -e GRID_BROWSER_TIMEOUT=240000 -e GRID_TIMEOUT=240000 -d --name "$selenium_hub"  selenium/hub
+	sudo docker run -p 5555:4444 -e GRID_BROWSER_TIMEOUT=240000 -e GRID_TIMEOUT=240000 -d --name "$selenium_hub"  selenium/hub
 
 	sudo docker build -t selenium/vnc-node-chrome-debug ./node_chrome
 	
-	sudo docker run -P -e "TZ=Asia/Taipei" -v $home_pwd/tmp/Downloads:/home/seluser/Downloads -d --name "$chrome_node" --link $selenium_hub:hub  selenium/vnc-node-chrome-debug
+	sudo docker run -P -v $home_pwd/tmp/Downloads:/home/seluser/Downloads -d --name "$chrome_node" --link $selenium_hub:hub  selenium/vnc-node-chrome-debug
 
 	sudo docker build -t selenium/vnc-node-firefox-debug ./node_firefox
 	
-	sudo docker run -P -e "TZ=Asia/Taipei" -v $home_pwd/tmp/Downloads:/home/seluser/Downloads -d --name "$firefox_node" --link $selenium_hub:hub  selenium/vnc-node-firefox-debug
+	sudo docker run -P -v $home_pwd/tmp/Downloads:/home/seluser/Downloads -d --name "$firefox_node" --link $selenium_hub:hub  selenium/vnc-node-firefox-debug
 
 	echo ""
 	echo "*** Building is Done ***"
