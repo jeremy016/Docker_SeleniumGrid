@@ -44,8 +44,8 @@ function build()
 	echo "Firefox Node Name:"$firefox_node
 
 	sudo docker pull selenium/hub
-
-	sudo docker run -p 5555:4444 -e GRID_BROWSER_TIMEOUT=240000 -e GRID_TIMEOUT=240000 -d --name "$selenium_hub"  selenium/hub
+    
+	sudo docker run -p 5555:4444 -e GRID_BROWSER_TIMEOUT=240000 -e GRID_TIMEOUT=0 -d --name "$selenium_hub"  selenium/hub
 
 	sudo docker build -t selenium/vnc-node-chrome-debug ./node_chrome
 	
