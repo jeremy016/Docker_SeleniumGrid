@@ -1,5 +1,8 @@
 
 prefix="Auto_testing"
+selenium_hub=$prefix"_selenium_hub"
+chrome_node=$prefix"_chrome_node"
+firefox_node=$prefix"_firefox_node"
 
 function clean()
 {	
@@ -34,10 +37,6 @@ function build()
 	echo ""
 	echo "*** Now is building ***"
 	echo ""
-
-	selenium_hub=$prefix"_selenium_hub"
-	chrome_node=$prefix"_chrome_node"
-	firefox_node=$prefix"_firefox_node"
 	
 	echo "Selenium Hub Name:"$selenium_hub
 	echo "Chrome Node Name:"$chrome_node
@@ -61,11 +60,26 @@ function build()
 
 	sudo docker ps
 }
+function result()
+{	
 
+	process=$(sudo docker ps)
+	
+	if [[ $process = *"$selenium_hub"* ]] && [[ $process = *"$chrome_node"* ]] && [[ $process = *"$firefox_node"* ]] ; then
+		jenkins_code=0
+	else
+		jenkins_code=1
+	fi
+
+	echo "Result Code:"$jenkins_code
+	
+}
 
 if [[ "$1" == "build" ]]; then
 	build
 elif [[ "$1" == "clean" ]]; then
 	clean
+elif [[ "$1" == "result" ]]; then
+	result
 fi
 
