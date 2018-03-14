@@ -66,12 +66,10 @@ function result()
 	process=$(sudo docker ps)
 	
 	if [[ $process = *"$selenium_hub"* ]] && [[ $process = *"$chrome_node"* ]] && [[ $process = *"$firefox_node"* ]] ; then
-		jenkins_code=0
+		exit 0
 	else
-		jenkins_code=1
+		exit 1
 	fi
-
-	echo "Result Code:"$jenkins_code
 	
 }
 
