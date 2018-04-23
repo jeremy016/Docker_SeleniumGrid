@@ -48,11 +48,11 @@ function build()
 
 	sudo docker build -t selenium/vnc-node-chrome-debug ./node_chrome
 	
-	sudo docker run -P -v $home_pwd/tmp/Downloads:/home/seluser/Downloads -d --name "$chrome_node" --link $selenium_hub:hub  selenium/vnc-node-chrome-debug
+	sudo docker run -P -v /dev/shm:/dev/shm -v $home_pwd/tmp/Downloads:/home/seluser/Downloads -d --name "$chrome_node" --link $selenium_hub:hub  selenium/vnc-node-chrome-debug
 
 	sudo docker build -t selenium/vnc-node-firefox-debug ./node_firefox
 	
-	sudo docker run -P -v $home_pwd/tmp/Downloads:/home/seluser/Downloads -d --name "$firefox_node" --link $selenium_hub:hub  selenium/vnc-node-firefox-debug
+	sudo docker run -P -v /dev/shm:/dev/shm -v $home_pwd/tmp/Downloads:/home/seluser/Downloads -d --name "$firefox_node" --link $selenium_hub:hub  selenium/vnc-node-firefox-debug
 
 	echo ""
 	echo "*** Building is Done ***"
